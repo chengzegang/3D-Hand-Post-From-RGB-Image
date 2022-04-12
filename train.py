@@ -1,4 +1,5 @@
 import os
+from os.path import exists
 from random import shuffle
 import pandas as pd
 import pickle
@@ -65,15 +66,17 @@ def train(dataloader, model, optimizer, criterion, epoch):
             writer.add_scalar('Loss/train', loss.item(), n_iter)
 
 
-def main():
+def main(batch_size=32, learning_rate=1e-3, epoch=1, load_model_param=True, load_model_param_path='./params/param.pt', save_model_param_path='./params/param.pt'):
     dataset = RHDDataset(data_folder='data/RHD_published_v2/', data_type='training')
     dataloader = DataLoader(dataset, batch_size=32)
-    learning_rate = 1e-3
-    epoch = 5
     criterion = nn.MSELoss()
     model = models.cnn.CNN(320, 320).to(device)
+    if load_model_param and exists(load_model_param_path):
+        model.load_state_dict(torch.load(load_model_param_path))
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
     train(dataloader, model, optimizer, criterion, epoch)
+
+    torch.save(model.state_dict(), save_model_param_path)
     
     return 0
 
