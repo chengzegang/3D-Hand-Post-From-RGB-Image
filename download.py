@@ -10,12 +10,14 @@ data_folder = './data/'
 pbar = None
 last_pbar = 0
 
+
 def show_progress(block_num, block_size, total_size):
     global pbar, last_pbar
 
     if pbar is None:
-        pbar = tqdm(total=total_size,  unit='B', unit_scale=True, unit_divisor=1024, desc="Downloading Rendered Handpose Dataset")
-    
+        pbar = tqdm(total=total_size, unit='B', unit_scale=True, unit_divisor=1024,
+                    desc="Downloading Rendered Handpose Dataset")
+
     downloaded = block_num * block_size
     if downloaded < total_size:
         if downloaded != last_pbar:
@@ -25,6 +27,7 @@ def show_progress(block_num, block_size, total_size):
         pbar.close()
         pbar = None
         last_pbar = 0
+
 
 urllib.request.urlretrieve(data_url, filename, show_progress)
 

@@ -1,5 +1,6 @@
 import torch.nn as nn
 
+
 class CNN(nn.Module):
     def __init__(self, image_h, image_w):
         super().__init__()
@@ -28,8 +29,7 @@ class CNN(nn.Module):
         self.relu5 = nn.ReLU()
         self.fc6 = nn.Linear(42 * 3, 42 * 3)
         self.unflat = nn.Unflatten(1, (42, 3))
-    
-    
+
     def forward(self, x):
         x = self.relu1(self.conv1(x))
         x = self.pool1(x)
@@ -46,9 +46,9 @@ class CNN(nn.Module):
         x = self.relu4(self.conv4(x))
         x = self.pool4(x)
         x = self.norm4(x)
-        
+
         x = self.flat(x)
-        #print(x.shape)
+        # print(x.shape)
         x = self.relu5(self.fc5(x))
         x = self.fc6(x)
 
