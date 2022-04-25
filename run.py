@@ -30,12 +30,17 @@ def forward(trained_model, imagename):
     # TODO: evaluate the image using given model, you may want to do some post-processing
 
     image = image_loader(imagename)
+
     result = trained_model(image)
 
-    return result
+    # torch tensor to np array
+
+    return result.data.cpu().numpy()
 
 
 def visualize(image, prediction):
+    prediction = prediction[0]
+
     # TODO: project the vectors into a 3d space, visualize it side by side with the original image.
 
     # Visualize data
@@ -47,7 +52,6 @@ def visualize(image, prediction):
     ax1.imshow(image)
 
     # show scattered skeleton points
-    print(prediction.shape)
 
     kp_visible = np.ones(42)
     kp_visible = kp_visible == kp_visible
@@ -114,8 +118,7 @@ def main(model_type='CNN', model_param_path='./params/param.pt'):
         model = models.cnn.CNN(320, 320).to(device)
 
     if exists(model_param_path):
-        model = torch_models.vgg16()
-        model.load_state_dict(torch.load(model_param_path), False)
+        model.load_state_dict(torch.load(model_param_path))
         model.to(device)
 
     # TODO: implementing eval and visualize functions, use these two function to visualize skeleton of input hand image.
