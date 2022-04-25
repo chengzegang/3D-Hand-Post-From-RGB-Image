@@ -17,7 +17,12 @@ from mpl_toolkits.mplot3d import Axes3D
 # chose between training and evaluation set
 # set = 'training'
 set = 'evaluation'
-image = plt.imread(os.path.join('data/RHD_published_v2', set, 'color', '%.5d.png' % 1))
+
+cwd = os.getcwd()  # Get the current working directory (cwd)
+files = os.listdir(cwd)  # Get all the files in that directory
+print("Files in %r: %s" % (cwd, files))
+
+image = plt.imread('../../00000.png')
 prediction = np.array([[-0.00488, -0.05724, 0.7018], [-0.01406, 0.03035, 0.5829], [-0.02056, 0.01356, 0.6067],
                        [-0.02833, - 0.01342, 0.6344], [-0.02037, - 0.0345, 0.6679], [0.01981, 0.0278, 0.5292],
                        [0.01434, 0.01526, 0.5475], [0.007658, - 0.003428, 0.5729], [-0.001645, - 0.02029, 0.6021],

@@ -6,17 +6,31 @@ import os
 import matplotlib.pyplot as plt
 import torchvision.models as torch_models
 import tensorflow as tf
+import torchvision.transforms as transforms
+import PIL.Image as Image
+from torch.autograd import Variable
 
 model = None
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
+loader = transforms.Compose([transforms.ToTensor()])
 
-def forward(trained_model, image):
+
+def image_loader(image_name):
+    """load image, returns cuda tensor"""
+    image = Image.open(image_name)
+    image = loader(image).float()
+    image = Variable(image, requires_grad=True)
+    image = image.unsqueeze(0)  # this is for VGG, may not be needed for ResNet
+    return image.cuda()  # assumes that you're using GPU
+
+
+def forward(trained_model, imagename):
     # TODO: evaluate the image using given model, you may want to do some post-processing
 
-    image_tensor = tf.convert_to_tensor(trained_model)
-    result = trained_model(image_tensor)
+    image = image_loader(imagename)
+    result = trained_model(image)
 
     return result
 
@@ -101,14 +115,15 @@ def main(model_type='CNN', model_param_path='./params/param.pt'):
 
     if exists(model_param_path):
         model = torch_models.vgg16()
-        model.load_state_dict(torch.load(model_param_path))
+        model.load_state_dict(torch.load(model_param_path), False)
+        model.to(device)
 
     # TODO: implementing eval and visualize functions, use these two function to visualize skeleton of input hand image.
     set_id = 'evaluation'
     sample_id = 1
 
-    image = plt.imread(os.path.join('data/RHD_published_v2', set_id, 'color', '%.5d.png' % sample_id))
-    prediction = forward(model, image)
+    image = plt.imread(os.path.join('00000.png'))
+    prediction = forward(model, '00000.png')
     visualize(image, prediction)
 
     return 0
