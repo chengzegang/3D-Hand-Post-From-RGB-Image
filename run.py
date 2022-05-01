@@ -1,6 +1,6 @@
 from os.path import exists
 import torch
-import models.cnn
+from models.layers import Swin
 import numpy as np
 import os
 import matplotlib.pyplot as plt
@@ -115,7 +115,7 @@ def visualize(image, prediction):
 def main(model_type='CNN', model_param_path='./params/param.pt'):
     global model
     if model_type == 'CNN':
-        model = models.cnn.CNN(320, 320).to(device)
+        model = Swin().to(device)
 
     if exists(model_param_path):
         model.load_state_dict(torch.load(model_param_path))
@@ -125,8 +125,9 @@ def main(model_type='CNN', model_param_path='./params/param.pt'):
     set_id = 'evaluation'
     sample_id = 1
 
-    image = plt.imread(os.path.join('00000.png'))
-    prediction = forward(model, '00000.png')
+    image_dir = os.path.join('data', 'RHD_published_v2', 'evaluation', 'color', '00003.png')
+    image = plt.imread(image_dir)
+    prediction = forward(model, image_dir)
     visualize(image, prediction)
 
     return 0
