@@ -71,36 +71,36 @@ def visualize(image, prediction):
     # Keypoints available:
     # 0: left wrist,
     # 1-4: left thumb [tip to palm],
-    finger = np.flip(np.vstack((prediction[1:5], prediction[0])))
+    finger = np.flip(np.vstack((prediction[0], prediction[1:5])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
     # 5-8: left index,
-    finger = np.flip(np.vstack((prediction[5:9], prediction[0])))
+    finger = np.flip(np.vstack((prediction[0], prediction[5:9])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
     # 9-12: 3 finger,
-    finger = np.flip(np.vstack((prediction[9:13], prediction[0])))
+    finger = np.flip(np.vstack((prediction[0], prediction[9:13])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
     # 13-16 4 finger
-    finger = np.flip(np.vstack((prediction[13:17], prediction[0])))
+    finger = np.flip(np.vstack((prediction[0], prediction[13:17])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
     # 17-20: left pinky,
-    finger = np.flip(np.vstack((prediction[17:21], prediction[0])))
+    finger = np.flip(np.vstack((prediction[0], prediction[17:21])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
 
     # 21: right wrist,
     # 22-25: right thumb,
-    finger = np.flip(np.vstack((prediction[22:26], prediction[21])))
+    finger = np.flip(np.vstack((prediction[21], prediction[22:26])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
     # 26-29: 2 finger
-    finger = np.flip(np.vstack((prediction[26:30], prediction[21])))
+    finger = np.flip(np.vstack((prediction[21], prediction[26:30])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
     # 30-33: 3 finger
-    finger = np.flip(np.vstack((prediction[30:34], prediction[21])))
+    finger = np.flip(np.vstack((prediction[21], prediction[30:34])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
     # 34-37: 4 finger
-    finger = np.flip(np.vstack((prediction[34:38], prediction[21])))
+    finger = np.flip(np.vstack((prediction[21], prediction[34:38])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
     # 38-41: right pinky
-    finger = np.flip(np.vstack((prediction[38:42], prediction[21])))
+    finger = np.flip(np.vstack((prediction[21], prediction[38:42])))
     ax4.plot(finger[kp_visible, 0], finger[kp_visible, 1], finger[kp_visible, 2])
 
     ax4.set_xlabel('x')
