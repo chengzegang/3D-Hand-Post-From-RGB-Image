@@ -62,13 +62,13 @@ def train(dataloader, model, optimizer, criterion, epoch, save_model_param_path=
             loss.backward()
             optimizer.step()
 
-            pbar.set_description(f"epoch {ep + 1}/{epoch}; loss: {loss.item():.4f}")
+            pbar.set_description(f"epoch {ep + 1}/{epoch}; loss: {loss.item():.8f}")
             writer.add_scalar('Loss/train', loss.item(), n_iter)
         if save_model_param_path != None:
             torch.save(model.state_dict(), save_model_param_path)
 
 
-def main(batch_size=32, learning_rate=1e-4, epoch=12, load_model_param=True, load_model_param_path='./params/param.pt',
+def main(batch_size=32, learning_rate=1e-6, epoch=12, load_model_param=True, load_model_param_path='./params/param.pt',
          save_model_param_path='./params/param.pt'):
     dataset = MyDataset(data_folder=os.path.join('data', 'hiu_dmtl_data'), data_type='train')
     dataloader = DataLoader(dataset, batch_size=batch_size)
