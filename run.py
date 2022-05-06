@@ -9,21 +9,20 @@ import tensorflow as tf
 import torchvision.transforms as transforms
 import PIL.Image as Image
 from torch.autograd import Variable
-
+from transformers import AutoFeatureExtractor
+from torchvision.io import read_image
 model = None
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
-
+feature_extractor = AutoFeatureExtractor.from_pretrained("microsoft/swin-tiny-patch4-window7-224")
 loader = transforms.Compose([transforms.ToTensor()])
 
 
 def image_loader(image_name):
     """load image, returns cuda tensor"""
-    image = Image.open(image_name)
-    image = loader(image).float()
-    image = Variable(image, requires_grad=True)
-    image = image.unsqueeze(0)  # this is for VGG, may not be needed for ResNet
-    return image.cuda()  # assumes that you're using GPU
+    image = read_image(image_name)
+    image = feature_extractor(image, return_tensors="pt")['pixel_values'].to(device)
+    return image
 
 
 def forward(trained_model, imagename):
@@ -112,20 +111,20 @@ def visualize(image, prediction):
     return 0
 
 
-def main(model_type='CNN', model_param_path='./params/param.pt'):
+def main(ckpt_path='data/ckpts/ckpt_2022_05_05_15_55_24/ckpt_90.pt'):
     global model
-    if model_type == 'CNN':
-        model = Swin().to(device)
+    model = Swin().to(device)
 
-    if exists(model_param_path):
-        model.load_state_dict(torch.load(model_param_path))
-        model.to(device)
+    if exists(ckpt_path):
+        print('checkpoint used')
+        checkpoint = torch.load(ckpt_path)
+        model.load_state_dict(checkpoint['model_state_dict'])
 
     # TODO: implementing eval and visualize functions, use these two function to visualize skeleton of input hand image.
     set_id = 'evaluation'
     sample_id = 1
 
-    image_dir = os.path.join('data', 'RHD_published_v2', 'evaluation', 'color', '00003.png')
+    image_dir = os.path.join('data', 'hiu_dmtl_data', 'valid', 'jpbalrfovs.png')
     image = plt.imread(image_dir)
     prediction = forward(model, image_dir)
     visualize(image, prediction)

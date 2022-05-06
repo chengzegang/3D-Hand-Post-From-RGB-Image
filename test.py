@@ -22,8 +22,8 @@ cwd = os.getcwd()  # Get the current working directory (cwd)
 files = os.listdir(cwd)  # Get all the files in that directory
 print("Files in %r: %s" % (cwd, files))
 
-image = plt.imread('data/hiu_dmtl_data/train/abdcohpinf.png')
-with open('data/hiu_dmtl_data/train/abdcohpinf.json', 'r') as jsonfile:
+image = plt.imread('data/hiu_dmtl_data/test/abdcohpinf.png')
+with open('data/hiu_dmtl_data/test/abdcohpinf.json', 'r') as jsonfile:
     label = json.load(jsonfile)
 prediction = np.array(label['pts3d_2hand'])
 
