@@ -11,6 +11,7 @@ import PIL.Image as Image
 from torch.autograd import Variable
 from transformers import AutoFeatureExtractor
 from torchvision.io import read_image
+import time
 model = None
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -124,9 +125,12 @@ def main(ckpt_path='data/ckpts/ckpt_2022_05_05_15_55_24/ckpt_90.pt'):
     set_id = 'evaluation'
     sample_id = 1
 
-    image_dir = os.path.join('data', 'hiu_dmtl_data', 'valid', 'jpbalrfovs.png')
+    image_dir = os.path.join('data', 'hiu_dmtl_data', 'valid', 'adhfbypnie.png')
     image = plt.imread(image_dir)
+    start_t = time.time()
     prediction = forward(model, image_dir)
+    end_t = time.time()
+    print(end_t - start_t)
     visualize(image, prediction)
 
     return 0
