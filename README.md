@@ -1,5 +1,4 @@
 # Estimation of 3D Hand Posture from RGB Image Inputs
-## Introduction
 Virtual Reality (VR) is one of the most popular concepts of recent game development. Nowadays players can easily access to the virtual environment by purchasing various VR devices, and all of these devices include hand controllers so game developers can simulate hand post in game. However, regular hand controllers have less degree of freedoms and can only detect a few hand gestures, while other more sensitive and accurate controllers are expensive and not wildly used.
 Not only in games, VR and AR has been expected to be the next generation user-interface technology that shifts from classic 2-Dimension (keyboard and mouse) to 3-Dimension, which will dramatically increase efficiency. So in order to develop a more accessible solution, we propose an idea that uses a single camera to detect 3d hand post, without using any external devices.
 
